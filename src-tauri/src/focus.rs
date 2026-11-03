@@ -419,7 +419,7 @@ mod sys {
 pub fn idle_seconds() -> f64 {
     #[cfg(target_os = "windows")]
     {
-        unsafe { win::last_input_seconds() }
+        win::last_input_seconds()
     }
     #[cfg(not(target_os = "windows"))]
     {
@@ -586,9 +586,10 @@ pub fn describe_app_file(file: &std::path::Path) -> Result<WorkApp, String> {
 mod win {
     use super::AppInfo;
     use windows::core::PWSTR;
-    use windows::Win32::Foundation::{CloseHandle, HANDLE};
+    use windows::Win32::Foundation::CloseHandle;
     use windows::Win32::System::Threading::{
-        GetCurrentProcessId, OpenProcess, QueryFullProcessImageNameW, PROCESS_QUERY_LIMITED_INFORMATION,
+        GetCurrentProcessId, OpenProcess, QueryFullProcessImageNameW, PROCESS_NAME_FORMAT,
+        PROCESS_QUERY_LIMITED_INFORMATION,
     };
     use windows::Win32::UI::Input::KeyboardAndMouse::{GetLastInputInfo, LASTINPUTINFO};
     use windows::Win32::UI::WindowsAndMessaging::{GetForegroundWindow, GetWindowThreadProcessId};
@@ -596,18 +597,18 @@ mod win {
     pub fn foreground_app() -> Option<AppInfo> {
         unsafe {
             let hwnd = GetForegroundWindow();
-            if hwnd.0 == 0 {
+            if hwnd.0.is_null() {
                 return None;
             }
             let mut pid = 0u32;
-            GetWindowThreadProcessId(hwnd, Some(&mut pid));
+            GetWindowThreadProcessId(hwnd, Some(&mut pid as *mut u32));
             if pid == 0 {
                 return None;
             }
             let handle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid).ok()?;
             let mut buf = [0u16; 1024];
             let mut size = buf.len() as u32;
-            let result = QueryFullProcessImageNameW(handle, 0, PWSTR(buf.as_mut_ptr()), &mut size);
+            let result = QueryFullProcessImageNameW(handle, PROCESS_NAME_FORMAT(0), PWSTR(buf.as_mut_ptr()), &mut size);
             let _ = CloseHandle(handle);
             if result.is_err() {
                 return None;
@@ -627,8 +628,8 @@ mod win {
                 cbSize: std::mem::size_of::<LASTINPUTINFO>() as u32,
                 dwTime: 0,
             };
-            if GetLastInputInfo(&mut lii).is_ok() {
-                let tick = GetTickCount();
+            if GetLastInputInfo(&mut lii).as_bool() {
+                let tick = get_tick_count();
                 ((tick.saturating_sub(lii.dwTime)) as f64) / 1000.0
             } else {
                 0.0
@@ -636,7 +637,7 @@ mod win {
         }
     }
 
-    fn GetTickCount() -> u32 {
+    fn get_tick_count() -> u32 {
         unsafe { windows::Win32::System::SystemInformation::GetTickCount() }
     }
 }

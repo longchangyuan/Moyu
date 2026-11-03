@@ -37,6 +37,8 @@ jobs:
 
       - name: 安装前端依赖
         run: npm install --no-audit --no-fund
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
 
       - name: 打包
         uses: tauri-apps/tauri-action@v0

@@ -9,6 +9,7 @@
   "main": "main/main.js",
   "scripts": {
     "start": "electron .",
+    "tauri": "tauri",
     "assets": "electron scripts/render-assets.js",
     "dist:mac": "node scripts/build.js mac",
     "dist:win": "node scripts/build.js win",
