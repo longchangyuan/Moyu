@@ -1,0 +1,213 @@
+/* 摸鱼小狐 · 场景样式 */
+.fox-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+}
+.fox-scene .scene-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.fox-scene .fox,
+.fox-scene .bucket { cursor: pointer; }
+
+/* ---------- 配色：白天 ---------- */
+.scene-svg .sky-top { stop-color: #6FC0EE; }
+.scene-svg .sky-bottom { stop-color: #D4EEFB; }
+.scene-svg .water-top { stop-color: #69BDE4; }
+.scene-svg .water-bottom { stop-color: #2A7DBB; }
+.scene-svg .sun-core { stop-color: #FFF9E0; }
+.scene-svg .sun-mid { stop-color: #FFF1B8; stop-opacity: .55; }
+.scene-svg .sun-edge { stop-color: #FFF1B8; }
+.scene-svg .sun-disc { fill: #FFF8DA; }
+.scene-svg .mtn-far { fill: #9CC0DE; }
+.scene-svg .mtn-near { fill: #74A884; }
+.scene-svg .treeline { fill: #5D9070; }
+.scene-svg .cloud path { fill: #FFFFFF; opacity: .92; }
+.scene-svg .reflection ellipse { fill: #FFF6D0; opacity: .55; }
+.scene-svg .shimmer path { stroke: #FFFFFF; stroke-width: 2.5; stroke-linecap: round; opacity: .45; }
+.scene-svg .raft-shadow { fill: #1B4F7A; opacity: .28; }
+.scene-svg .waterline { fill: #4FA6D6; opacity: .55; }
+.scene-svg .ripple { fill: none; stroke: #FFFFFF; stroke-width: 2; opacity: 0; }
+.scene-svg .fishing-line { stroke: #FFFFFF; stroke-width: 1.4; opacity: .75; }
+.scene-svg .rod { stroke: #4A2E1E; stroke-width: 5; stroke-linecap: round; }
+.scene-svg .blush { fill: #FF8A8A; opacity: .35; }
+.scene-svg .reeds path { fill: none; stroke: #4E8C4A; stroke-width: 5; stroke-linecap: round; }
+.scene-svg .reed-r path { stroke: #5A9A52; }
+.scene-svg .cattail { fill: #7A4E2C; }
+.scene-svg .leaves path { fill: #5FA05A; opacity: .9; }
+.scene-svg .stars circle { fill: #FFFFFF; }
+.scene-svg .stars { opacity: 0; transition: opacity 2s; }
+.scene-svg .moon { opacity: 0; transition: opacity 2s; }
+.scene-svg .sun { transition: opacity 2s; }
+.scene-svg .tint { fill: #0B1636; opacity: 0; pointer-events: none; transition: opacity 2s; }
+.scene-svg .zzz text { font: 700 22px/1 "PingFang SC", "Microsoft YaHei", sans-serif; fill: #FFFFFF; stroke: #3A4A7A; stroke-width: 1; opacity: 0; }
+
+.scene-svg stop,
+.scene-svg .mtn-far, .scene-svg .mtn-near, .scene-svg .treeline,
+.scene-svg .cloud path, .scene-svg .waterline, .scene-svg .reeds path {
+  transition: stop-color 2s, fill 2s, stroke 2s;
+}
+
+/* ---------- 清晨 ---------- */
+.scene-svg[data-palette="dawn"] .sky-top { stop-color: #8EA6E0; }
+.scene-svg[data-palette="dawn"] .sky-bottom { stop-color: #FFD9B8; }
+.scene-svg[data-palette="dawn"] .water-top { stop-color: #E9B49C; }
+.scene-svg[data-palette="dawn"] .water-bottom { stop-color: #6A86BE; }
+.scene-svg[data-palette="dawn"] .sun-disc { fill: #FFE2B0; }
+.scene-svg[data-palette="dawn"] .mtn-far { fill: #B6A6C8; }
+.scene-svg[data-palette="dawn"] .mtn-near { fill: #7F9A86; }
+.scene-svg[data-palette="dawn"] .cloud path { fill: #FFE7DA; }
+.scene-svg[data-palette="dawn"] .waterline { fill: #C69CA4; }
+
+/* ---------- 黄昏 ---------- */
+.scene-svg[data-palette="sunset"] .sky-top { stop-color: #6E6AB8; }
+.scene-svg[data-palette="sunset"] .sky-bottom { stop-color: #FFB07A; }
+.scene-svg[data-palette="sunset"] .water-top { stop-color: #F2A27A; }
+.scene-svg[data-palette="sunset"] .water-bottom { stop-color: #5C5D9E; }
+.scene-svg[data-palette="sunset"] .sun-disc { fill: #FFC77A; }
+.scene-svg[data-palette="sunset"] .sun-core { stop-color: #FFE0A8; }
+.scene-svg[data-palette="sunset"] .sun-mid { stop-color: #FFB46E; }
+.scene-svg[data-palette="sunset"] .mtn-far { fill: #9A7CA6; }
+.scene-svg[data-palette="sunset"] .mtn-near { fill: #6A7466; }
+.scene-svg[data-palette="sunset"] .treeline { fill: #4E5E52; }
+.scene-svg[data-palette="sunset"] .cloud path { fill: #FFD2B8; }
+.scene-svg[data-palette="sunset"] .reflection ellipse { fill: #FFC77A; opacity: .7; }
+.scene-svg[data-palette="sunset"] .waterline { fill: #C98A86; }
+.scene-svg[data-palette="sunset"] .raft-shadow { fill: #3A2E5A; }
+
+/* ---------- 夜晚 ---------- */
+.scene-svg[data-palette="night"] .sky-top { stop-color: #0C1530; }
+.scene-svg[data-palette="night"] .sky-bottom { stop-color: #2C3E74; }
+.scene-svg[data-palette="night"] .water-top { stop-color: #2A3F74; }
+.scene-svg[data-palette="night"] .water-bottom { stop-color: #0C1632; }
+.scene-svg[data-palette="night"] .mtn-far { fill: #2B3A68; }
+.scene-svg[data-palette="night"] .mtn-near { fill: #1C2A4A; }
+.scene-svg[data-palette="night"] .treeline { fill: #16223C; }
+.scene-svg[data-palette="night"] .cloud path { fill: #4A5A8A; opacity: .5; }
+.scene-svg[data-palette="night"] .reflection ellipse { fill: #FFF3C4; opacity: .4; }
+.scene-svg[data-palette="night"] .shimmer path { opacity: .18; }
+.scene-svg[data-palette="night"] .waterline { fill: #2E4A80; }
+.scene-svg[data-palette="night"] .reeds path { stroke: #22402E; }
+.scene-svg[data-palette="night"] .leaves path { fill: #2A4A36; }
+.scene-svg[data-palette="night"] .stars { opacity: 1; }
+.scene-svg[data-palette="night"] .moon { opacity: 1; }
+.scene-svg[data-palette="night"] .sun { opacity: 0; }
+.scene-svg[data-palette="night"] .tint { opacity: .22; }
+.scene-svg[data-palette="night"] .fishing-line { opacity: .4; }
+
+/* ---------- 心情 ---------- */
+.scene-svg .eyes, .scene-svg .mouth { display: none; }
+.scene-svg[data-mood="lazy"] .eyes-lazy,
+.scene-svg[data-mood="happy"] .eyes-happy,
+.scene-svg[data-mood="sleep"] .eyes-sleep,
+.scene-svg[data-mood="wow"] .eyes-wow { display: inline; }
+.scene-svg[data-mood="lazy"] .mouth-calm,
+.scene-svg[data-mood="sleep"] .mouth-calm,
+.scene-svg[data-mood="happy"] .mouth-open,
+.scene-svg[data-mood="wow"] .mouth-open { display: inline; }
+.scene-svg[data-mood="sleep"] .zzz text { animation: zzz 3.6s ease-in-out infinite; }
+.scene-svg[data-mood="sleep"] .zzz text:nth-child(2) { animation-delay: .6s; }
+.scene-svg[data-mood="sleep"] .zzz text:nth-child(3) { animation-delay: 1.2s; }
+.scene-svg[data-mood="happy"] .blush,
+.scene-svg[data-mood="wow"] .blush { opacity: .55; }
+
+/* ---------- 动画 ---------- */
+.scene-svg * { transform-box: fill-box; }
+.scene-svg .c1 { animation: drift 70s linear infinite; }
+.scene-svg .c2 { animation: drift 95s linear infinite -30s; }
+.scene-svg .c3 { animation: drift 82s linear infinite -55s; }
+.scene-svg .bobber { animation: bob 2.8s ease-in-out infinite; transform-origin: 50% 100%; }
+.scene-svg .ripple.r1 { animation: ripple 2.8s ease-out infinite; transform-origin: center; }
+.scene-svg .ripple.r2 { animation: ripple 2.8s ease-out infinite 1.4s; transform-origin: center; }
+.scene-svg .shimmer { animation: shimmer 6s ease-in-out infinite alternate; }
+.scene-svg .reflection { animation: shimmer 4s ease-in-out infinite alternate; }
+.scene-svg .tail { animation: wag 4.2s ease-in-out infinite; transform-origin: 0% 70%; }
+.scene-svg .head { animation: breathe 4.2s ease-in-out infinite; transform-origin: 50% 100%; }
+.scene-svg .head.bounce { animation: hop .5s ease-out 1, breathe 4.2s ease-in-out infinite .5s; }
+.scene-svg .ear-l { animation: twitch 7s ease-in-out infinite; transform-origin: 80% 100%; }
+.scene-svg .ear-r { animation: twitch 9s ease-in-out infinite 2s; transform-origin: 20% 100%; }
+.scene-svg .eyes-lazy, .scene-svg .eyes-wow { animation: blink 5.5s infinite; transform-origin: center; }
+.scene-svg .fish-swim { animation: swim 9s ease-in-out infinite alternate; }
+.scene-svg .fish { animation: wiggle 1.2s ease-in-out infinite; transform-origin: center; }
+.scene-svg .raft { animation: float 5s ease-in-out infinite; }
+.scene-svg .fox, .scene-svg .bucket { animation: float 5s ease-in-out infinite; }
+.scene-svg .bucket-fish { animation: flop 3.5s ease-in-out infinite; transform-origin: 50% 100%; }
+.scene-svg .reed-l { animation: sway 5s ease-in-out infinite; transform-origin: 50% 100%; }
+.scene-svg .reed-r { animation: sway 6s ease-in-out infinite reverse; transform-origin: 50% 100%; }
+.scene-svg .stars circle:nth-child(odd) { animation: twinkle 3s ease-in-out infinite; }
+.scene-svg .stars circle:nth-child(3n) { animation: twinkle 4.5s ease-in-out infinite 1s; }
+
+.scene-svg .jump-fish .jf { opacity: 0; }
+.scene-svg .jump-fish.go .jf { animation: leap 1.2s cubic-bezier(.3,.6,.4,1) 1; }
+.scene-svg .splash ellipse { fill: none; stroke: #FFFFFF; stroke-width: 2.5; opacity: 0; transform-origin: center; }
+.scene-svg .splash.go .sp1 { animation: ripple 1s ease-out 1; }
+.scene-svg .splash.go .sp2 { animation: ripple 1s ease-out 1 .9s; }
+.scene-svg .heart { fill: #FF6B8B; opacity: 0; animation: heart 1.4s ease-out forwards; }
+
+@keyframes drift { from { transform: translateX(-260px); } to { transform: translateX(900px); } }
+@keyframes bob { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(4px) rotate(4deg); } }
+@keyframes ripple { 0% { transform: scale(.4); opacity: .8; } 100% { transform: scale(2.6); opacity: 0; } }
+@keyframes shimmer { from { transform: translateX(-14px); opacity: .7; } to { transform: translateX(14px); opacity: 1; } }
+@keyframes wag { 0%,100% { transform: rotate(0); } 50% { transform: rotate(-5deg); } }
+@keyframes breathe { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(1.5px) rotate(-1.2deg); } }
+@keyframes hop { 0% { transform: translateY(0); } 35% { transform: translateY(-14px) rotate(3deg); } 70% { transform: translateY(2px); } 100% { transform: translateY(0); } }
+@keyframes twitch { 0%,90%,100% { transform: rotate(0); } 93% { transform: rotate(-8deg); } 96% { transform: rotate(4deg); } }
+@keyframes blink { 0%,94%,100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+@keyframes swim { from { transform: translateX(0); } to { transform: translateX(120px); } }
+@keyframes wiggle { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+@keyframes flop { 0%,80%,100% { transform: rotate(0); } 85% { transform: rotate(-12deg); } 90% { transform: rotate(10deg); } 95% { transform: rotate(-6deg); } }
+@keyframes sway { 0%,100% { transform: rotate(0); } 50% { transform: rotate(2.5deg); } }
+@keyframes twinkle { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+@keyframes zzz { 0% { opacity: 0; transform: translate(0,0) scale(.7); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(14px,-20px) scale(1.1); } }
+@keyframes leap {
+  0% { opacity: 1; transform: translate(0, 10px) rotate(-60deg); }
+  50% { opacity: 1; transform: translate(40px, -110px) rotate(0deg); }
+  100% { opacity: 1; transform: translate(80px, 20px) rotate(70deg); }
+}
+@keyframes heart { 0% { opacity: 0; transform: translateY(0) scale(.6); } 25% { opacity: 1; } 100% { opacity: 0; transform: translateY(-50px) scale(1.15); } }
+
+/* 静态背景（用于模糊底图）：关闭动画 */
+.fox-scene.is-static * { animation: none !important; }
+
+/* ---------- 气泡 ---------- */
+.fox-scene .speech {
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  transform: translate(-50%, 6px) scale(.96);
+  max-width: 70%;
+  padding: 8px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .95);
+  color: #3A2A22;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(20, 40, 80, .18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+}
+.fox-scene .speech::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 2px;
+}
+.fox-scene .speech.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fox-scene * { animation-duration: 0s !important; animation-iteration-count: 1 !important; }
+}

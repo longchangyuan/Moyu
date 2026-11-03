@@ -1,0 +1,121 @@
+{
+  "name": "moyu-fox",
+  "productName": "摸鱼小狐",
+  "version": "1.2.0",
+  "description": "摸鱼小狐 · 下班倒计时与实时收入桌面小工具",
+  "author": "MoyuFox",
+  "license": "MIT",
+  "private": true,
+  "main": "main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "assets": "electron scripts/render-assets.js",
+    "dist:mac": "node scripts/build.js mac",
+    "dist:win": "node scripts/build.js win",
+    "dist": "node scripts/build.js all",
+    "pack:source": "node scripts/pack-source.js",
+    "release": "node scripts/release.js"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.12.4",
+    "electron": "^45.2.1",
+    "electron-builder": "^26.18.0",
+    "resedit": "^3.1.0"
+  },
+  "build": {
+    "appId": "com.moyufox.desktop",
+    "productName": "摸鱼小狐",
+    "copyright": "Copyright © 2026 MoyuFox",
+    "directories": {
+      "output": "dist/${version}",
+      "buildResources": "build"
+    },
+    "files": [
+      "main/**/*",
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "compression": "maximum",
+    "electronLanguages": [
+      "zh-CN",
+      "en-US",
+      "zh_CN",
+      "en"
+    ],
+    "electronDownload": {
+      "mirror": "https://npmmirror.com/mirrors/electron/"
+    },
+    "afterPack": "scripts/after-pack.js",
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.icns",
+      "category": "public.app-category.productivity",
+      "artifactName": "MoyuFox-${version}-mac-${arch}.${ext}",
+      "minimumSystemVersion": "12.0",
+      "identity": "-",
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "title": "摸鱼小狐 ${version}",
+      "contents": [
+        {
+          "x": 150,
+          "y": 190
+        },
+        {
+          "x": 390,
+          "y": 190,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 540,
+        "height": 380
+      }
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "executableName": "MoyuFox",
+      "signAndEditExecutable": false,
+      "artifactName": "MoyuFox-${version}-win-x64-setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "摸鱼小狐",
+      "uninstallDisplayName": "摸鱼小狐",
+      "installerLanguages": [
+        "zh_CN"
+      ],
+      "language": "2052",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "include": "build/installer.nsh",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>摸鱼小狐 · 小组件</title>
+  <link rel="stylesheet" href="css/scene.css">
+  <link rel="stylesheet" href="css/media.css">
+  <link rel="stylesheet" href="css/widget.css">
+</head>
+<body>
+  <div class="widget" id="widget">
+    <div class="w-scene" id="scene"></div>
+    <div class="w-media" id="media"></div>
+    <div class="w-shade"></div>
+    <div class="w-info">
+      <div class="w-label" id="wLabel">距离下班</div>
+      <div class="w-time" id="wTime">--:--:--</div>
+      <div class="w-earn"><span>已摸</span><b id="wEarn">¥0.00</b></div>
+    </div>
+    <div class="w-focus" id="wFocus" hidden><i></i><span></span></div>
+    <div class="w-bar"><i id="wBar"></i></div>
+  </div>
+  <script src="js/core.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/media.js"></script>
+  <script src="js/bridge.js"></script>
+  <script src="js/widget.js"></script>
+</body>
+</html>

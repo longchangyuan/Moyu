@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>摸鱼小狐</title>
+  <link rel="stylesheet" href="css/scene.css">
+  <link rel="stylesheet" href="css/media.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"><div id="bgScene"></div><canvas id="bgCanvas" hidden></canvas></div>
+
+  <header class="titlebar">
+    <div class="brand"><span class="brand-dot"></span>摸鱼小狐</div>
+  </header>
+
+  <main class="layout">
+    <section class="dash">
+      <div class="card glass countdown-card">
+        <div class="card-label" id="cdTitle">距离下班还有</div>
+        <div class="countdown" id="cdValue">--:--:--</div>
+        <div class="progress-row" id="progressRow">
+          <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="progress-text" id="progressText">0%</span>
+        </div>
+        <div class="card-foot" id="cdFoot"></div>
+      </div>
+
+      <div class="card glass earn-card">
+        <div>
+          <div class="card-label">今日已赚</div>
+          <div class="earn-row">
+            <span class="earn" id="earnValue"><small>¥</small><span id="earnNum">0.00</span></span>
+            <span class="rate" id="rateText">≈ ¥0.0000 / 秒</span>
+          </div>
+        </div>
+        <div class="month-box">
+          <div class="card-label">本月累计</div>
+          <div class="month" id="monthValue">¥0.00</div>
+        </div>
+        <div class="coin-layer" id="coinLayer"></div>
+      </div>
+
+      <div class="stats">
+        <div class="card glass stat"><b id="statDaily">¥0</b><span>日薪</span></div>
+        <div class="card glass stat"><b id="statHourly">¥0</b><span>时薪</span></div>
+        <div class="card glass stat"><b id="statRest">-</b><span id="statRestLabel">距离休息</span></div>
+        <div class="card glass stat"><b id="statPay">-</b><span id="statPayLabel">距离发薪</span></div>
+      </div>
+
+      <div class="card glass focus-card" id="focusCard" hidden>
+        <div class="focus-now">
+          <span class="focus-dot" id="focusDot"></span>
+          <div class="focus-now-text">
+            <b id="focusState">专注中</b>
+            <span id="focusApp"></span>
+          </div>
+        </div>
+        <div class="focus-nums">
+          <div><b id="fFocus">0分</b><span>专注</span></div>
+          <div><b id="fSlack">0分</b><span id="fSlackMoney">摸鱼</span></div>
+          <div><b id="fAway">0分</b><span>离开</span></div>
+          <div><b id="fRate">-</b><span>专注率</span></div>
+        </div>
+        <div class="focus-bar" id="focusBar"><i class="f"></i><i class="s"></i><i class="a"></i></div>
+        <button type="button" class="focus-setup" id="focusSetup" hidden>还没有设置工作软件，点这里添加 →</button>
+      </div>
+
+      <div class="card scene-card">
+        <div id="scene"></div>
+        <div id="sceneMedia"></div>
+        <div class="scene-badge" id="sceneBadge"><i></i><span>摸鱼中…</span></div>
+        <div class="scene-hint">点点小狐狸，或者点水面试试</div>
+      </div>
+    </section>
+
+    <aside class="settings glass">
+      <div class="settings-head">
+        <div class="tabs" role="tablist" id="tabs">
+          <button type="button" role="tab" data-tab="work" class="on">工作设置<i class="dirty-dot"></i></button>
+          <button type="button" role="tab" data-tab="focus">专注</button>
+          <button type="button" role="tab" data-tab="look">外观</button>
+          <button type="button" role="tab" data-tab="app">应用</button>
+        </div>
+        <p id="tabDesc">合理安排工作与休息，让生活更有节奏</p>
+      </div>
+
+      <!-- ============ 工作设置 ============ -->
+      <div class="pane" data-pane="work">
+      <div class="settings-scroll">
+      <form class="settings-body" id="form" autocomplete="off" novalidate>
+        <fieldset>
+          <legend>休息制度</legend>
+          <div class="row">
+            <label class="row-label">休息制度</label>
+            <div class="segmented" data-name="restMode">
+              <button type="button" data-value="double">双休</button>
+              <button type="button" data-value="single">单休</button>
+              <button type="button" data-value="bigsmall">大小周</button>
+              <button type="button" data-value="custom">自定义</button>
+            </div>
+          </div>
+          <div class="row" data-show="restMode=bigsmall">
+            <label class="row-label">本周是</label>
+            <div class="segmented" data-name="bigSmallThisWeek">
+              <button type="button" data-value="double">双休周</button>
+              <button type="button" data-value="single">单休周</button>
+            </div>
+          </div>
+          <div class="row" data-show="restMode=custom">
+            <label class="row-label">休息日</label>
+            <div class="weekdays" id="weekdays"></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>工作时间</legend>
+          <div class="row">
+            <label class="row-label" for="workStart">上班时间</label>
+            <div class="time-input"><i class="ico-clock"></i><input id="workStart" name="workStart" inputmode="numeric" maxlength="5" placeholder="09:00"></div>
+          </div>
+          <div class="row">
+            <label class="row-label" for="workEnd">下班时间</label>
+            <div class="time-input"><i class="ico-clock"></i><input id="workEnd" name="workEnd" inputmode="numeric" maxlength="5" placeholder="18:00"></div>
+          </div>
+          <div class="row-error" data-error="workStart"></div>
+          <div class="row-error" data-error="workEnd"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>午休设置</legend>
+          <div class="row">
+            <label class="row-label">午休扣除</label>
+            <label class="switch"><input type="checkbox" name="lunchEnabled"><span></span></label>
+            <span class="switch-text">开启午休扣除</span>
+            <span class="help" data-tip="开启后，午休时间不计入工作时长，也不产生收入">?</span>
+          </div>
+          <div class="row" data-show="lunchEnabled">
+            <label class="row-label" for="lunchStart">午休时间</label>
+            <div class="time-input"><i class="ico-clock"></i><input id="lunchStart" name="lunchStart" inputmode="numeric" maxlength="5" placeholder="12:00"></div>
+          </div>
+          <div class="row" data-show="lunchEnabled">
+            <label class="row-label" for="lunchEnd">结束时间</label>
+            <div class="time-input"><i class="ico-clock"></i><input id="lunchEnd" name="lunchEnd" inputmode="numeric" maxlength="5" placeholder="13:00"></div>
+          </div>
+          <div class="row-error" data-error="lunchEnd"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>薪资设置</legend>
+          <div class="row">
+            <label class="row-label" for="monthlySalary">月薪</label>
+            <input class="input w-num" id="monthlySalary" name="monthlySalary" type="number" min="0" step="100">
+            <span class="unit">元 / 月</span>
+          </div>
+          <div class="row-error" data-error="monthlySalary"></div>
+          <div class="row">
+            <label class="row-label" for="payDaysMode">计薪天数</label>
+            <select class="input select" id="payDaysMode" name="payDaysMode">
+              <option value="legal">21.75 天（法定）</option>
+              <option value="actual">当月实际工作日</option>
+              <option value="custom">自定义</option>
+            </select>
+            <input class="input w-small" data-show="payDaysMode=custom" name="customPayDays" type="number" min="1" max="31" step="0.25">
+            <span class="unit" data-show="payDaysMode=custom">天</span>
+          </div>
+          <div class="row-error" data-error="customPayDays"></div>
+          <div class="row">
+            <label class="row-label" for="payday">发薪日</label>
+            <input class="input w-small" id="payday" name="payday" type="number" min="1" max="31" step="1">
+            <span class="unit">号</span>
+            <span class="hint">遇到小月自动取月末</span>
+          </div>
+          <div class="row-error" data-error="payday"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>节假日 / 调休 <span class="legend-sub">覆盖上面的休息制度</span></legend>
+          <div class="row">
+            <input class="input w-date" type="date" id="spDate">
+            <div class="segmented small" id="spType">
+              <button type="button" data-value="rest" class="on">放假</button>
+              <button type="button" data-value="work">补班</button>
+            </div>
+            <button type="button" class="btn-ghost" id="spAdd">添加</button>
+          </div>
+          <ul class="special-list" id="specialList"></ul>
+        </fieldset>
+      </form>
+      </div>
+
+      <div class="settings-foot">
+        <span class="save-state" id="saveState"></span>
+        <button type="button" class="btn-primary" id="saveBtn">保存设置</button>
+      </div>
+      </div>
+
+      <!-- ============ 专注 ============ -->
+      <div class="pane" data-pane="focus" hidden>
+      <div class="settings-scroll">
+        <section class="look-block">
+          <div class="look-row">
+            <span class="look-title grow">识别工作 / 摸鱼</span>
+            <label class="switch"><input type="checkbox" id="fEnabled"><span></span></label>
+          </div>
+          <p class="look-tip">只看你<b>正在使用</b>的前台软件：用工作软件算「专注」，用其它软件算「摸鱼」，在后台开着的软件不算。键盘鼠标长时间没动或锁屏，算「离开」。只统计工作时间（午休除外）。数据只保存在这台电脑上。</p>
+          <div class="focus-live" id="fLive"></div>
+        </section>
+
+        <section class="look-block" data-fon>
+          <div class="look-head">
+            <span class="look-title">工作软件</span>
+            <span class="legend-sub" id="fAppCount"></span>
+            <button type="button" class="btn-ghost small" id="fPick">＋ 从电脑里选择</button>
+          </div>
+          <ul class="work-apps" id="fApps"></ul>
+        </section>
+
+        <section class="look-block" data-fon>
+          <div class="look-head">
+            <span class="look-title">今天用过的软件</span>
+            <span class="legend-sub">点「设为工作」加入上面的列表</span>
+          </div>
+          <ul class="app-usage" id="fUsage"></ul>
+        </section>
+
+        <section class="look-block" data-fon>
+          <div class="look-title">判定规则</div>
+          <div class="look-row">
+            <span class="row-text">多久不操作算离开</span>
+            <select class="input select-sm" id="fIdle">
+              <option value="2">2 分钟</option>
+              <option value="5">5 分钟</option>
+              <option value="10">10 分钟</option>
+              <option value="15">15 分钟</option>
+              <option value="30">30 分钟</option>
+              <option value="0">不判定</option>
+            </select>
+          </div>
+          <div class="look-row">
+            <span class="row-text">下班后、休息日用工作软件也算专注（加班）</span>
+            <label class="switch"><input type="checkbox" id="fOvertime"><span></span></label>
+          </div>
+        </section>
+
+        <section class="look-block" data-fon>
+          <div class="look-title">显示在哪里</div>
+          <div class="prefs-grid three">
+            <label class="pref"><span>主界面</span><span class="switch"><input type="checkbox" data-fshow="showOnMain"><span></span></span></label>
+            <label class="pref"><span>小组件</span><span class="switch"><input type="checkbox" data-fshow="showOnWidget"><span></span></span></label>
+            <label class="pref"><span>托盘</span><span class="switch"><input type="checkbox" data-fshow="showInTray"><span></span></span></label>
+          </div>
+          <p class="look-tip">都关掉也会照常在后台统计，只是不显示。</p>
+        </section>
+
+        <section class="look-block" data-fon>
+          <div class="look-title">近 7 天</div>
+          <div class="week-chart" id="fWeek"></div>
+          <div class="week-legend"><i class="f"></i>专注 <i class="s"></i>摸鱼 <i class="a"></i>离开</div>
+        </section>
+      </div>
+      </div>
+
+      <!-- ============ 外观 ============ -->
+      <div class="pane" data-pane="look" hidden>
+      <div class="settings-scroll">
+        <section class="look-block">
+          <div class="look-row">
+            <span class="look-title">设置对象</span>
+            <div class="segmented" id="lookTarget">
+              <button type="button" data-value="main" class="on">主界面</button>
+              <button type="button" data-value="widget">桌面小组件</button>
+            </div>
+          </div>
+          <div class="look-preview" id="lookPreview">
+            <div class="look-preview-media"></div>
+            <span class="look-preview-tag" id="lookPreviewTag">主界面 · 小狐钓鱼</span>
+          </div>
+        </section>
+
+        <section class="look-block">
+          <div class="look-head">
+            <span class="look-title">背景素材库</span>
+            <span class="legend-sub" id="libCount"></span>
+            <button type="button" class="btn-ghost small" id="addBg">＋ 添加背景</button>
+          </div>
+          <p class="look-tip">支持 PNG / JPG / WebP / BMP 图片、GIF 动图、MP4 / WebM / MOV 视频，单个不超过 200 MB。可以直接把文件拖进窗口。</p>
+          <div class="bg-grid" id="bgGrid"></div>
+        </section>
+
+        <section class="look-block">
+          <div class="look-row">
+            <span class="look-title">显示方式</span>
+            <div class="segmented small" id="lookFit">
+              <button type="button" data-value="cover">铺满裁剪</button>
+              <button type="button" data-value="contain">完整显示</button>
+            </div>
+          </div>
+          <div class="look-row">
+            <span class="look-title">遮罩暗度</span>
+            <input type="range" class="range" id="lookDim" min="0" max="70" step="1">
+            <span class="range-val" id="lookDimVal">15%</span>
+          </div>
+          <p class="look-tip">显示方式和遮罩暗度对主界面和小组件同时生效。背景较亮、文字看不清时，可以把遮罩调暗一些。</p>
+        </section>
+      </div>
+      </div>
+
+      <!-- ============ 应用 ============ -->
+      <div class="pane" data-pane="app" hidden>
+      <div class="settings-scroll">
+      <section class="app-prefs">
+        <div class="prefs-title">常规 <span class="legend-sub">即时生效</span></div>
+        <div class="prefs-grid">
+          <label class="pref"><span>桌面小组件</span><span class="switch"><input type="checkbox" data-pref="widgetVisible"><span></span></span></label>
+          <label class="pref"><span>小组件置顶</span><span class="switch"><input type="checkbox" data-pref="widgetOnTop"><span></span></span></label>
+          <label class="pref"><span>下班提醒</span><span class="switch"><input type="checkbox" data-pref="notify"><span></span></span></label>
+          <label class="pref" id="prefAuto"><span>开机自启</span><span class="switch"><input type="checkbox" data-pref="autoLaunch"><span></span></span></label>
+          <label class="pref mac-only"><span>菜单栏倒计时</span><span class="switch"><input type="checkbox" data-pref="trayCountdown"><span></span></span></label>
+          <div class="pref">
+            <span>小组件大小</span>
+            <div class="segmented small" id="widgetScale">
+              <button type="button" data-value="0.8">小</button>
+              <button type="button" data-value="1">中</button>
+              <button type="button" data-value="1.25">大</button>
+              <button type="button" data-value="1.5">特大</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="about">
+        <div class="about-card">
+          <img src="assets/icon.png" alt="" class="about-icon">
+          <div>
+            <div class="about-name">摸鱼小狐 <span class="ver" id="aboutVer"></span></div>
+            <div class="about-sub">安装新版本时直接运行新安装包即可覆盖升级，设置和背景都会保留。</div>
+          </div>
+        </div>
+        <button type="button" class="btn-ghost small" id="openData">打开数据文件夹</button>
+      </section>
+
+      <section class="changelog">
+        <div class="prefs-title">更新日志</div>
+        <div id="changelog"></div>
+      </section>
+      </div>
+      </div>
+    </aside>
+  </main>
+
+  <div class="drop-mask" id="dropMask"><div><b>松开鼠标，添加为背景</b><span id="dropTarget">将应用到主界面</span></div></div>
+
+  <div class="modal" id="updateModal" hidden>
+    <div class="modal-card">
+      <div class="modal-badge">NEW</div>
+      <h3 id="updateTitle">已更新到新版本</h3>
+      <p class="modal-sub" id="updateSub"></p>
+      <div class="modal-body" id="updateNotes"></div>
+      <button type="button" class="btn-primary" id="updateOk">知道了</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/core.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/media.js"></script>
+  <script src="js/bridge.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

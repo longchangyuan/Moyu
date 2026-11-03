@@ -1,0 +1,9 @@
+node_modules/
+dist/
+releases/
+.DS_Store
+*.log
+
+# Rust / Tauri 构建产物
+src-tauri/target/
+src-tauri/gen/

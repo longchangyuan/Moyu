@@ -1,0 +1,112 @@
+[
+  {
+    "name": "working",
+    "now": [
+      2026,
+      11,
+      2,
+      17,
+      40,
+      24
+    ],
+    "status": "working",
+    "countdown": 1176,
+    "title": "距离下班还有",
+    "short": "距离下班",
+    "big": "00:19:36",
+    "badge": "摸鱼中…",
+    "tray": "00:19:36",
+    "earned": "440.99",
+    "daily": "459.77",
+    "daysToRest": 5,
+    "daysToPayday": 8
+  },
+  {
+    "name": "before",
+    "now": [
+      2026,
+      11,
+      2,
+      8,
+      0,
+      0
+    ],
+    "status": "before",
+    "countdown": 3600,
+    "title": "距离上班还有",
+    "short": "距离上班",
+    "big": "01:00:00",
+    "badge": "还没上班",
+    "tray": "上班 01:00:00",
+    "earned": "0.00",
+    "daily": "459.77",
+    "daysToRest": 5,
+    "daysToPayday": 8
+  },
+  {
+    "name": "lunch",
+    "now": [
+      2026,
+      11,
+      2,
+      12,
+      30,
+      0
+    ],
+    "status": "lunch",
+    "countdown": 19800,
+    "title": "午休中 · 距离下班还有",
+    "short": "午休中 · 距离下班",
+    "big": "05:30:00",
+    "badge": "午休打盹 Zzz",
+    "tray": "午休 05:30:00",
+    "earned": "172.41",
+    "daily": "459.77",
+    "daysToRest": 5,
+    "daysToPayday": 8
+  },
+  {
+    "name": "off",
+    "now": [
+      2026,
+      11,
+      2,
+      19,
+      0,
+      0
+    ],
+    "status": "off",
+    "countdown": 50400,
+    "title": "今日已下班",
+    "short": "已下班",
+    "big": "下班啦！",
+    "badge": "下班啦！",
+    "tray": "已下班",
+    "earned": "459.77",
+    "daily": "459.77",
+    "daysToRest": 5,
+    "daysToPayday": 8
+  },
+  {
+    "name": "rest",
+    "now": [
+      2026,
+      11,
+      7,
+      10,
+      0,
+      0
+    ],
+    "status": "rest",
+    "countdown": 169200,
+    "title": "休息日 · 距离上班还有",
+    "short": "休息日",
+    "big": "1天 23:00:00",
+    "badge": "休息日",
+    "tray": "休息日",
+    "earned": "0.00",
+    "daily": "459.77",
+    "daysToRest": 0,
+    "daysToPayday": 3
+  }
+]
