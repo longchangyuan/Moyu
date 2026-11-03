@@ -3,6 +3,8 @@ name: build
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     tags:
       - 'v*'
 
@@ -13,11 +15,11 @@ jobs:
       matrix:
         include:
           - platform: windows-latest
-            args: '--target x86_64-pc-windows-msvc'
+            target: x86_64-pc-windows-msvc
           - platform: macos-latest
-            args: '--target aarch64-apple-darwin'
+            target: aarch64-apple-darwin
           - platform: macos-latest
-            args: '--target x86_64-apple-darwin'
+            target: x86_64-apple-darwin
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -31,7 +33,7 @@ jobs:
       - name: 安装 Rust（含交叉 target）
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.args == '--target x86_64-pc-windows-msvc' && 'x86_64-pc-windows-msvc' || matrix.args == '--target aarch64-apple-darwin' && 'aarch64-apple-darwin' || 'x86_64-apple-darwin' }}
+          targets: ${{ matrix.target }}
 
       - name: 安装前端依赖
         run: npm install --no-audit --no-fund
@@ -44,4 +46,4 @@ jobs:
           tagName: v__VERSION__
           releaseName: '摸鱼小狐 v__VERSION__'
           releaseDraft: true
-          args: ${{ matrix.args }}
+          args: --target ${{ matrix.target }}
