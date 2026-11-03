@@ -47,3 +47,20 @@ jobs:
           releaseName: '摸鱼小狐 v__VERSION__'
           releaseDraft: true
           args: --target ${{ matrix.target }}
+
+  notify:
+    needs: build
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: 发送微信通知
+        run: |
+          if [ "${{ needs.build.result }}" = "success" ]; then
+            CONTENT='✅ 摸鱼小狐打包成功：mac(arm64/x64) + Windows(x64) 三个安装包已生成'
+          else
+            CONTENT='❌ 摸鱼小狐打包失败，请到 Actions 页面查看日志'
+          fi
+          curl -s -X POST "${{ secrets.WECHAT_WEBHOOK }}" \
+            -H 'Content-Type: application/json' \
+            -d "{\"msgtype\":\"text\",\"text\":{\"content\":\"${CONTENT}\"}}"
+
