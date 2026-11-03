@@ -18,7 +18,7 @@
 | 4 | 自定义背景 + `moyu-bg://` 协议 | ✅ 完成 |
 | 5 | 专注识别 | ✅ 完成 |
 | 6 | 前端桥接（bridge.js + commands + events） | ✅ 完成 |
-| 7 | 打包发布 | ✅ mac 双架构已完成；Windows 走 CI |
+| 7 | 打包发布 | ✅ mac 双架构已完成；Windows 在 Windows 本机打包 |
 
 ---
 
@@ -49,8 +49,8 @@
 
 ## 剩余事项
 
-1. **Windows 包**：走 GitHub Actions（`.github/workflows/build.yml` 已写好）。项目 push 到 GitHub 后，手动触发或打 tag 即可自动出 `nsis` 安装包（x64）。
-   - 注意：`focus.rs` 里 `#[cfg(windows)]` 的 Win32 前台识别是盲写的，第一次在 Windows 编译可能报 API 名/feature 错误，需按报错微调。
+1. **Windows 包**：在 Windows 本机执行 `npx tauri build` 打 `nsis` 安装包（x64）。
+   - `focus.rs` 里 `#[cfg(windows)]` 的 Win32 前台识别，已在 mac 上通过 `cargo check --target x86_64-pc-windows-msvc` 预检并修正 API，Windows 本机打包应能直接成功。
 2. **运行自测**：GUI 交互（小组件拖动、菜单栏倒计时、自定义背景、专注识别）需真机验证。
 3. **清理**：原 Electron 代码（`main/`、`package.json` 的 electron-builder 部分、`scripts/` 里的 electron 脚本）待 Tauri 版验证通过后再删。
 
